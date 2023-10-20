@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sass": "sass --watch ./stylesheets/main.scss:./public/css/style.css"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -15,7 +16,8 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
     "react-router-dom": "^6.16.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "sass": "^1.69.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.28",

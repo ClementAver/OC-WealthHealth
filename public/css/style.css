@@ -1,0 +1,309 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&family=News+Cycle:wght@400;700&family=Young+Serif&display=swap");
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* _-_-_-_- End of reset -_-_-_-_ */
+#root {
+  font-family: "News Cycle", sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background-color: #eeeeee;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+}
+
+h1 {
+  font-size: 2rem;
+  font-family: "Young Serif", serif;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-family: "Young Serif", serif;
+  text-align: center;
+}
+
+.home {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.home h2 {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.header {
+  background-color: #eeeeee;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 1rem 0 0.8rem;
+}
+.header h1 {
+  margin-bottom: 0.6rem;
+}
+.header .team {
+  width: 3rem;
+  margin-bottom: 0.2rem;
+}
+.header span {
+  font-size: 0.8rem;
+}
+.header p {
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 680px;
+  width: 100%;
+}
+form .identity {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+}
+form .identity > div {
+  flex-basis: 320px;
+  flex-grow: 2;
+}
+form .input {
+  display: flex;
+  gap: 0.6rem;
+  flex-flow: column nowrap;
+  margin-bottom: 1rem;
+}
+
+label {
+  text-align: center;
+}
+
+input,
+textarea,
+select {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 0.4rem;
+  background: #eeeeee;
+  box-shadow: inset 0.2rem 0.2rem 0.4rem #dbdbdb, inset -0.2rem -0.2rem 0.4rem #ffffff;
+}
+
+select {
+  cursor: pointer;
+  box-shadow: 0.2rem 0.2rem 0.4rem #dbdbdb, -0.2rem -0.2rem 0.4rem #ffffff;
+}
+select[id=department] {
+  margin-bottom: 2rem;
+}
+
+fieldset {
+  border: none;
+  margin-left: 0;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+fieldset legend {
+  font-weight: 700;
+  padding-top: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+fieldset > div {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+}
+fieldset > div > div {
+  flex-grow: 2;
+}
+
+button {
+  font-size: 1.2rem;
+  font-weight: 500;
+  width: fit-content;
+  align-self: center;
+  cursor: pointer;
+  padding: 0.2rem 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: #eeeeee;
+  box-shadow: 0.2rem 0.2rem 0.4rem #dbdbdb, -0.2rem -0.2rem 0.4rem #ffffff;
+  margin-bottom: 2rem;
+}
+button:hover {
+  box-shadow: 0.2rem 0.2rem 0.4rem #cfcfcf, -0.2rem -0.2rem 0.4rem #ffffff;
+}
+button:active {
+  box-shadow: inset 0.2rem 0.2rem 0.4rem #cfcfcf, inset -0.2rem -0.2rem 0.4rem #ffffff;
+}
+
+.invalid {
+  font-size: 0.8rem;
+  color: crimson;
+  text-align: center;
+}
+
+/* Firefox */
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

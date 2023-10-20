@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counter from "../features/counter/counter";
+import counter from "../../features/counter/counter";
 
 export const store = configureStore({
   reducer: {
@@ -7,4 +7,3 @@ export const store = configureStore({
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
