@@ -131,13 +131,19 @@ table {
 
 /* _-_-_-_- End of reset -_-_-_-_ */
 
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&family=News+Cycle:wght@400;700&family=Young+Serif&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
-// font-family: 'News Cycle', sans-serif;
-// font-family: 'Young Serif', serif;
+//  font-family: 'Inter', sans-serif;
 
-#root {
-  font-family: "News Cycle", sans-serif;
+:root {
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
 }
 
 .app {
@@ -148,143 +154,16 @@ table {
   align-items: center;
 }
 
-body {
-  background-color: #eeeeee;
-  min-height: 100vh;
-
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-}
-
 h1 {
   font-size: 2rem;
-  font-family: "Young Serif", serif;
   text-align: center;
 }
 
-h2 {
-  font-size: 1.6rem;
-  font-family: "Young Serif", serif;
-  text-align: center;
-}
+@import "globals/forms.scss";
+@import "globals/buttons.scss";
 
 @import "pages/Home.scss";
+
 @import "components/Header.scss";
-
-// Formulaires
-
-form {
-  display: flex;
-  flex-flow: column nowrap;
-  max-width: 680px;
-  width: 100%;
-
-  .identity {
-    display: flex;
-    flex-flow: row wrap;
-    gap: 1rem;
-
-    > div {
-      flex-basis: 320px;
-      flex-grow: 2;
-    }
-  }
-
-  .input {
-    display: flex;
-    gap: 0.6rem;
-    flex-flow: column nowrap;
-    margin-bottom: 1rem;
-  }
-}
-
-label {
-  text-align: center;
-}
-
-input,
-textarea,
-select {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 0.4rem;
-  background: #eeeeee;
-  box-shadow: inset 0.2rem 0.2rem 0.4rem #dbdbdb, inset -0.2rem -0.2rem 0.4rem #ffffff;
-}
-
-select {
-  cursor: pointer;
-  box-shadow: 0.2rem 0.2rem 0.4rem #dbdbdb, -0.2rem -0.2rem 0.4rem #ffffff;
-
-  &[id="department"] {
-    margin-bottom: 2rem;
-  }
-}
-
-fieldset {
-  border: none;
-  margin-left: 0;
-  padding: 1rem 0;
-  margin-bottom: 1rem;
-
-  legend {
-    font-weight: 700;
-    padding-top: 0.5rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  > div {
-    display: flex;
-    flex-flow: row wrap;
-    gap: 1rem;
-    > div {
-      flex-grow: 2;
-    }
-  }
-}
-
-button {
-  font-size: 1.2rem;
-  font-weight: 500;
-
-  width: fit-content;
-  align-self: center;
-
-  cursor: pointer;
-  padding: 0.2rem 2rem;
-
-  border: none;
-  border-radius: 0.4rem;
-  background: #eeeeee;
-  box-shadow: 0.2rem 0.2rem 0.4rem #dbdbdb, -0.2rem -0.2rem 0.4rem #ffffff;
-
-  &:hover {
-    box-shadow: 0.2rem 0.2rem 0.4rem #cfcfcf, -0.2rem -0.2rem 0.4rem #ffffff;
-  }
-  &:active {
-    box-shadow: inset 0.2rem 0.2rem 0.4rem #cfcfcf, inset -0.2rem -0.2rem 0.4rem #ffffff;
-  }
-
-  margin-bottom: 2rem;
-}
-
-.invalid {
-  font-size: 0.8rem;
-  color: crimson;
-  text-align: center;
-}
-
-/* Firefox */
-input[type="number"] {
-  appearance: textfield;
-  -moz-appearance: textfield;
-}
-
-/* Chrome */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+@import "components/Modal.scss";
+@import "components/Datepicker.scss";
