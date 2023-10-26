@@ -1,0 +1,69 @@
+.react-datepicker {
+  border: 1px solid black !important;
+  border-radius: 0.4 !important;
+
+  font-family: "Inter", sans-serif !important;
+
+  &__header {
+    border: none !important;
+    background-color: white !important;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 5%;
+      width: 90%;
+      height: 1px;
+      background-color: black;
+    }
+  }
+
+  &__current-month {
+    font-weight: 900 !important;
+  }
+
+  &__day {
+    color: black !important;
+
+    &--selected {
+      background-color: black !important;
+      color: white !important;
+
+      &:hover {
+        background-color: grey !important;
+      }
+    }
+
+    &--keyboard-selected {
+      background: #daf7a6 !important;
+      &:hover {
+        background-color: grey !important;
+        color: white !important;
+      }
+    }
+  }
+
+  &__triangle {
+    display: none;
+  }
+
+  &__navigation {
+    transform: scale(0.6) !important;
+    border-radius: 50% !important;
+    border: 2px solid black !important;
+
+    &-icon {
+      transform: scale(0.8);
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+
+      &::before {
+        border-color: black !important;
+
+        border-width: 2px 2px 0 0 !important;
+      }
+    }
+  }
+}

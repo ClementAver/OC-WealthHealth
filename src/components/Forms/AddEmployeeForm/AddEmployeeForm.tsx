@@ -130,9 +130,12 @@ export default function AddEmployeeForm() {
       id="create-employee"
     >
       <fieldset>
-        <legend>Identity</legend>
-        <div className="form-container">
-          <div className={`form-item  form-item-half ${showValidation.firstName ? "form-item-invalid" : ""}`}>
+        <legend>
+          Identity<div className="hr"></div>
+        </legend>
+
+        <div className="form__container">
+          <div className={`form__item  form__item--half ${showValidation.firstName ? "form__item--invalid" : ""}`}>
             <TextInput
               inputsState={inputsState}
               inputState="firstName"
@@ -144,7 +147,8 @@ export default function AddEmployeeForm() {
               validationMsg="3-64 caractères"
             />
           </div>
-          <div className={`form-item  form-item-half ${showValidation.lastName ? "form-item-invalid" : ""}`}>
+
+          <div className={`form__item  form__item--half ${showValidation.lastName ? "form__item--invalid" : ""}`}>
             <TextInput
               inputsState={inputsState}
               inputState="lastName"
@@ -156,7 +160,8 @@ export default function AddEmployeeForm() {
               validationMsg="3-64 caractères"
             />
           </div>
-          <div className={`form-item  form-item-half ${showValidation.birthDate ? "form-item-invalid" : ""}`}>
+
+          <div className={`form__item  form__item--half ${showValidation.birthDate ? "form__item--invalid" : ""}`}>
             <label htmlFor="birthDate">Birth Date</label>
             <DatePicker
               id="birthDate"
@@ -166,7 +171,8 @@ export default function AddEmployeeForm() {
               }}
             />
           </div>
-          <div className={`form-item  form-item-half ${showValidation.startDate ? "form-item-invalid" : ""}`}>
+
+          <div className={`form__item  form__item--half ${showValidation.startDate ? "form__item--invalid" : ""}`}>
             <label htmlFor="startDate">Start Date</label>
             <DatePicker
               id="startDate"
@@ -180,21 +186,25 @@ export default function AddEmployeeForm() {
       </fieldset>
 
       <fieldset>
-        <legend>Address</legend>
-        <div className="form-container">
-          <div className={`form-item ${showValidation.street ? "form-item-invalid" : ""}`}>
-            <TextInput
-              inputsState={inputsState}
-              inputState="street"
-              setInputsState={setInputsState}
-              showValidation={showValidation.street}
-              id="street"
-              label="Street"
-              placeholder="24 rue Madeleine Brès"
-              validationMsg="3-256 caractères"
-            />
-          </div>
-          <div className={`form-item  form-item-third ${showValidation.city ? "form-item-invalid" : ""}`}>
+        <legend>
+          Address<div className="hr"></div>
+        </legend>
+
+        <div className={`form__item ${showValidation.street ? "form__item--invalid" : ""}`}>
+          <TextInput
+            inputsState={inputsState}
+            inputState="street"
+            setInputsState={setInputsState}
+            showValidation={showValidation.street}
+            id="street"
+            label="Street"
+            placeholder="24 rue Madeleine Brès"
+            validationMsg="3-256 caractères"
+          />
+        </div>
+
+        <div className="form__container">
+          <div className={`form__item  form__item--third ${showValidation.city ? "form__item--invalid" : ""}`}>
             <TextInput
               inputsState={inputsState}
               inputState="city"
@@ -206,7 +216,8 @@ export default function AddEmployeeForm() {
               validationMsg="3-64 caractères"
             />
           </div>
-          <div className={`form-item  form-item-third ${showValidation.state ? "form-item-invalid" : ""}`}>
+
+          <div className={`form__item  form__item--third ${showValidation.state ? "form__item--invalid" : ""}`}>
             <Select
               inputsState={inputsState}
               inputState="state"
@@ -222,7 +233,8 @@ export default function AddEmployeeForm() {
               validationMsg="Choisir une option"
             />
           </div>
-          <div className={`form-item  form-item-third ${showValidation.state ? "form-item-invalid" : ""}`}>
+
+          <div className={`form__item  form__item--third ${showValidation.state ? "form__item--invalid" : ""}`}>
             <NumberInput
               inputsState={inputsState}
               inputState="zipCode"
@@ -237,8 +249,8 @@ export default function AddEmployeeForm() {
         </div>
       </fieldset>
 
-      <div className="form-container">
-        <div className={`form-item  ${showValidation.department ? "form-item-invalid" : ""}`}>
+      <div className="form__container">
+        <div className={`form__item form__last-item  ${showValidation.department ? "form__item--invalid" : ""}`}>
           <Select
             inputsState={inputsState}
             inputState="department"

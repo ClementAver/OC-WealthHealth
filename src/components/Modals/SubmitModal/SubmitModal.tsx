@@ -34,6 +34,7 @@ export default function Modal({ btnText, mdlText, validation, inputsState }: { b
     <>
       <button
         type="submit"
+        className="button button__submit"
         onClick={(e) => {
           e.stopPropagation();
           if (validation(inputsState)) handleOpen();
@@ -44,17 +45,17 @@ export default function Modal({ btnText, mdlText, validation, inputsState }: { b
 
       {showModal &&
         createPortal(
-          <div className="modal-bg">
+          <div className="modal__bg">
             <div
               className="modal"
               onClick={(e) => {
                 e.stopPropagation();
               }}
             >
-              <div className="modal-icon-bg"></div>
+              <div className="modal__icon__bg"></div>
               <svg
                 onClick={handleClose}
-                className="modal-icon"
+                className="modal__icon"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >

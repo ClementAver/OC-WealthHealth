@@ -7,7 +7,7 @@
   position: relative;
   font-family: "News Cycle", sans-serif;
 
-  &-bg {
+  &__bg {
     z-index: 200;
     position: fixed;
     inset: 0;
@@ -20,13 +20,13 @@
     align-items: center;
   }
 
-  &-icon {
+  &__icon {
     position: absolute;
     top: -0.7rem;
     right: -0.7rem;
     width: 1.4rem;
 
-    &-bg {
+    &__bg {
       position: absolute;
       top: -0.6rem;
       right: -0.6rem;

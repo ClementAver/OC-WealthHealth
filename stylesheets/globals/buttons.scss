@@ -1,6 +1,41 @@
-button {
-  border: none;
+.button {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+
+  border: 1px solid black;
   border-radius: 0.6rem;
   padding: 0.2rem 1rem;
-  background-color: rgba(222, 222, 222, 1);
+
+  background: none;
+
+  &__submit {
+    align-self: center;
+    position: relative;
+
+    overflow: hidden;
+
+    font-size: 1rem;
+    font-weight: 900;
+    padding: 0.4rem 1.4rem;
+
+    &:hover::before {
+      transform: translateX(0);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      border-radius: 0.6rem;
+
+      transition: transform 0.3s ease-in-out;
+
+      background: linear-gradient(to right, #daf7a6, powderblue);
+      transform: translateX(-100%);
+    }
+  }
 }

@@ -2,9 +2,10 @@
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
   align-items: center;
   padding: 1rem 0 0.8rem;
+
+  background-color: white;
 
   align-items: baseline;
   gap: 1rem;
@@ -13,6 +14,7 @@
   top: 0;
 
   span {
+    margin-left: auto;
     font-weight: 900;
     margin-bottom: 0.2rem;
     // border-bottom: 1px solid black;
@@ -25,6 +27,7 @@
   }
 
   p {
+    margin-right: auto;
     border-left: 1px solid black;
     padding-left: 1rem;
     font-weight: 300;
