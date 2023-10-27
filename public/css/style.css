@@ -197,6 +197,8 @@ h1 {
 .form__item--third input {
   min-width: 90px;
   width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .form__item--invalid {
   margin-bottom: 2rem;
@@ -276,6 +278,9 @@ h1 {
   -webkit-appearance: none;
   margin: 0;
 }
+.form [placeholder] {
+  text-overflow: ellipsis;
+}
 
 .button {
   font-family: "Inter", sans-serif;
@@ -340,11 +345,6 @@ h1 {
 .header span {
   margin-left: auto;
   font-weight: 900;
-  margin-bottom: 0.2rem;
-}
-.header .team {
-  display: none;
-  width: 3rem;
   margin-bottom: 0.2rem;
 }
 .header p {

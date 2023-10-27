@@ -4,6 +4,7 @@ import TextInput from "../../inputs/TextInput/TextInput";
 import NumberInput from "../../inputs/NumberInput/NumberInput";
 import SubmitModal from "../../Modals/SubmitModal/SubmitModal";
 import DatePicker from "react-datepicker";
+import { states, department } from "../../../data/data";
 
 export default function AddEmployeeForm() {
   const [inputsState, setInputsState] = useState({
@@ -14,9 +15,10 @@ export default function AddEmployeeForm() {
     street: "",
     city: "",
     state: "",
-    zipCode: 75000,
+    zipCode: 94101,
     department: "",
   });
+
   const [showValidation, setShowValidation] = useState({
     firstName: false,
     lastName: false,
@@ -143,7 +145,7 @@ export default function AddEmployeeForm() {
               showValidation={showValidation.firstName}
               id="first-name"
               label="First Name"
-              placeholder="François"
+              placeholder="John"
               validationMsg="3-64 caractères"
             />
           </div>
@@ -156,7 +158,7 @@ export default function AddEmployeeForm() {
               showValidation={showValidation.lastName}
               id="last-name"
               label="Last Name"
-              placeholder="Dupont"
+              placeholder="Doe"
               validationMsg="3-64 caractères"
             />
           </div>
@@ -198,7 +200,7 @@ export default function AddEmployeeForm() {
             showValidation={showValidation.street}
             id="street"
             label="Street"
-            placeholder="24 rue Madeleine Brès"
+            placeholder="Vonnie Brown 1515 Applewood Road Baton"
             validationMsg="3-256 caractères"
           />
         </div>
@@ -212,7 +214,7 @@ export default function AddEmployeeForm() {
               showValidation={showValidation.city}
               id="city"
               label="City"
-              placeholder="Paris"
+              placeholder="San Francisco"
               validationMsg="3-64 caractères"
             />
           </div>
@@ -225,11 +227,8 @@ export default function AddEmployeeForm() {
               showValidation={showValidation.state}
               id="state"
               label="State"
-              placeholder="Choisir"
-              options={[
-                { value: "france", labor: "France" },
-                { value: "belgique", labor: "Belgique" },
-              ]}
+              placeholder="Choose"
+              options={states}
               validationMsg="Choisir une option"
             />
           </div>
@@ -258,14 +257,8 @@ export default function AddEmployeeForm() {
             showValidation={showValidation.department}
             id="department"
             label="Department"
-            placeholder="Choisir"
-            options={[
-              { value: "sales", labor: "Sales" },
-              { value: "marketing", labor: "Marketing" },
-              { value: "engineering", labor: "Engineering" },
-              { value: "hr", labor: "Human Ressources" },
-              { value: "legal", labor: "Legal" },
-            ]}
+            placeholder="Choose"
+            options={department}
             validationMsg="Choisir une option"
           />
         </div>
