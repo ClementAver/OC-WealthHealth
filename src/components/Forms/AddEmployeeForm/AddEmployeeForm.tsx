@@ -6,6 +6,7 @@ import SubmitModal from "../../Modals/SubmitModal/SubmitModal";
 import DatePicker from "react-datepicker";
 import { states, department } from "../../../data/data";
 
+
 export default function AddEmployeeForm() {
   const [inputsState, setInputsState] = useState({
     firstName: "",
@@ -54,7 +55,7 @@ export default function AddEmployeeForm() {
 
     // const dateReg = /(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0,1,2])\/(19|20)\d{2}/gm;
 
-    if (inputsState.firstName.length < 3 || inputsState.firstName.length > 64) {
+    if (inputsState.firstName.length < 1 || inputsState.firstName.length > 64) {
       // Ci-dessous, on passe le state en argument car plusieurs modifications de state sont possible au cours de l'exécution de la fonction, ainsi chaque instruction modifiant le state utilisera le retour de l'instruction précédente.
       setShowValidation((state) => ({ ...state, firstName: true }));
     } else {
@@ -62,7 +63,7 @@ export default function AddEmployeeForm() {
       setShowValidation((state) => ({ ...state, firstName: false }));
     }
 
-    if (inputsState.lastName.length < 3 || inputsState.lastName.length > 64) {
+    if (inputsState.lastName.length < 1 || inputsState.lastName.length > 64) {
       setShowValidation((state) => ({ ...state, lastName: true }));
     } else {
       areValid.lastName = true;
