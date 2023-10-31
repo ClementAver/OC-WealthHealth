@@ -1,5 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { SelectProps, Option } from "../inputs";
+
+// This component is based on the following article :
+// https://css-tricks.com/striking-a-balance-between-native-and-custom-select-elements/
 
 export default function Select({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, options, validationMsg }: SelectProps) {
   // The main div for the native select element.
@@ -20,130 +23,114 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
   // The total number of options.
   const optionsCount = Array.from(customOptsList.current).length;
 
-  useEffect(() => {
-    let optionChecked = "";
-    let optionHoveredIndex = -1;
+  const optionChecked = useRef<string>("");
+  const optionHoveredIndex = useRef<number>(-1);
 
-    // Toggle custom select visibility when clicking the box
-    elSelectCustomBox.current?.addEventListener("click", () => {
-      const isClosed = !elSelectCustom.current?.classList.contains("isActive");
+  function updateCustomSelectChecked(value: string, text: string) {
+    const prevValue = optionChecked.current;
 
-      if (isClosed) {
-        openSelectCustom();
-      } else {
-        closeSelectCustom();
-      }
+    const elPrevOption = findOption("data-value", prevValue);
+    const elOption = findOption("data-value", value);
+
+    if (elPrevOption) {
+      elPrevOption.classList.remove("isActive");
+    }
+
+    if (elOption) {
+      elOption.classList.add("isActive");
+    }
+
+    if (elSelectCustomBox && elSelectCustomBox.current) elSelectCustomBox.current.textContent = text;
+    optionChecked.current = value;
+  }
+
+  function findOption(attrName: string, attrValue: string): HTMLDivElement | null {
+    const option = customOptsList.current.find((el) => {
+      const value = el.getAttribute(attrName);
+      return value === attrValue;
     });
 
-    function openSelectCustom() {
-      elSelectCustom.current?.classList.add("isActive");
-      // Remove aria-hidden in case this was opened by a user
-      // who uses AT (e.g. Screen Reader) and a mouse at the same time.
-      elSelectCustom.current?.setAttribute("aria-hidden", "false");
+    return option || null;
+  }
 
-      if (optionChecked) {
-        const optionCheckedIndex = customOptsList.current.findIndex((el) => el.getAttribute("data-value") === optionChecked);
-        updateCustomSelectHovered(optionCheckedIndex);
-      }
+  function updateCustomSelectHovered(newIndex: number) {
+    const prevOption = customOptsList.current[optionHoveredIndex.current];
+    const option = customOptsList.current[newIndex];
 
-      // Add related event listeners
-      document.addEventListener("click", watchClickOutside);
-      document.addEventListener("keydown", supportKeyboardNavigation);
+    if (prevOption) {
+      prevOption.classList.remove("isHover");
+    }
+    if (option) {
+      option.classList.add("isHover");
     }
 
-    function closeSelectCustom() {
-      elSelectCustom.current?.classList.remove("isActive");
+    optionHoveredIndex.current = newIndex;
+  }
 
-      elSelectCustom.current?.setAttribute("aria-hidden", "true");
+  function openSelectCustom() {
+    elSelectCustom.current?.classList.add("isActive");
+    // Remove aria-hidden in case this was opened by a user
+    // who uses AT (e.g. Screen Reader) and a mouse at the same time.
+    elSelectCustom.current?.setAttribute("aria-hidden", "false");
 
-      updateCustomSelectHovered(-1);
-
-      // Remove related event listeners
-      document.removeEventListener("click", watchClickOutside);
-      document.removeEventListener("keydown", supportKeyboardNavigation);
+    if (optionChecked) {
+      const optionCheckedIndex = customOptsList.current.findIndex((el) => el.getAttribute("data-value") === optionChecked.current);
+      updateCustomSelectHovered(optionCheckedIndex);
     }
 
-    function watchClickOutside(e: Event) {
-      const didClickedOutside = !elSelectCustom.current?.contains(e.target as Node);
-      if (didClickedOutside) {
-        closeSelectCustom();
-      }
+    // Add related event listeners
+    document.addEventListener("click", watchClickOutside);
+    document.addEventListener("keydown", supportKeyboardNavigation);
+  }
+
+  function closeSelectCustom() {
+    elSelectCustom.current?.classList.remove("isActive");
+    elSelectCustom.current?.setAttribute("aria-hidden", "true");
+    updateCustomSelectHovered(-1);
+    // Remove related event listeners
+    document.removeEventListener("click", watchClickOutside);
+    document.removeEventListener("keydown", supportKeyboardNavigation);
+  }
+
+  function watchClickOutside(e: Event) {
+    const didClickedOutside = !elSelectCustom.current?.contains(e.target as Node);
+    if (didClickedOutside) {
+      closeSelectCustom();
+    }
+  }
+
+  function supportKeyboardNavigation(e: KeyboardEvent) {
+    // press down -> go next
+    if (e.key === "ArrowDown" && optionHoveredIndex.current < optionsCount - 1) {
+      e.preventDefault(); // prevent page scrolling
+      updateCustomSelectHovered(optionHoveredIndex.current + 1);
     }
 
-    function updateCustomSelectHovered(newIndex: number) {
-      const prevOption = customOptsList.current[optionHoveredIndex];
-      const option = customOptsList.current[newIndex];
-
-      if (prevOption) {
-        prevOption.classList.remove("isHover");
-      }
-      if (option) {
-        option.classList.add("isHover");
-      }
-
-      optionHoveredIndex = newIndex;
+    // press up -> go previous
+    if (e.key === "ArrowUp" && optionHoveredIndex.current > 0) {
+      e.preventDefault(); // prevent page scrolling
+      updateCustomSelectHovered(optionHoveredIndex.current - 1);
     }
 
-    function supportKeyboardNavigation(e: KeyboardEvent) {
-      // press down -> go next
-      if (e.key === "ArrowDown" && optionHoveredIndex < optionsCount - 1) {
-        e.preventDefault(); // prevent page scrolling
-        updateCustomSelectHovered(optionHoveredIndex + 1);
+    // press Enter or space -> select the option
+    if (e.key === "Enter" || e.key === "Space") {
+      e.preventDefault();
+
+      const option = customOptsList.current[optionHoveredIndex.current];
+      const value = option && option.getAttribute("data-value");
+
+      if (elSelectNative && elSelectNative.current && value) {
+        elSelectNative.current.value = value;
+        updateCustomSelectChecked(value, option.textContent as string);
       }
-
-      // press up -> go previous
-      if (e.key === "ArrowUp" && optionHoveredIndex > 0) {
-        e.preventDefault(); // prevent page scrolling
-        updateCustomSelectHovered(optionHoveredIndex - 1);
-      }
-
-      // press Enter or space -> select the option
-      if (e.key === "Enter" || e.key === "Space") {
-        e.preventDefault();
-
-        const option = customOptsList.current[optionHoveredIndex];
-        const value = option && option.getAttribute("data-value");
-
-        if (elSelectNative && elSelectNative.current && value) {
-          elSelectNative.current.value = value;
-          updateCustomSelectChecked(value, option.textContent as string);
-        }
-        closeSelectCustom();
-      }
-
-      function updateCustomSelectChecked(value: string, text: string) {
-        const prevValue = optionChecked;
-
-        const elPrevOption = findOption("data-value", prevValue);
-        const elOption = findOption("data-value", value);
-
-        if (elPrevOption) {
-          elPrevOption.classList.remove("isActive");
-        }
-
-        if (elOption) {
-          elOption.classList.add("isActive");
-        }
-
-        if (elSelectCustomBox && elSelectCustomBox.current) elSelectCustomBox.current.textContent = text;
-        optionChecked = value;
-      }
-
-      // press ESC -> close selectCustom
-      if (e.key === "Escape") {
-        closeSelectCustom();
-      }
+      closeSelectCustom();
     }
 
-    function findOption(attrName: string, attrValue: string): HTMLDivElement | null {
-      const option = customOptsList.current.find((el) => {
-        const value = el.getAttribute(attrName);
-        return value === attrValue;
-      });
-
-      return option || null;
+    // press ESC -> close selectCustom
+    if (e.key === "Escape") {
+      closeSelectCustom();
     }
-  }, [optionsCount]);
+  }
 
   return (
     <>
@@ -161,7 +148,16 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
             aria-labelledby={id}
             name={id}
             value={inputsState[inputState as keyof typeof inputsState].toString()}
-            onChange={(e) => setInputsState({ ...inputsState, [inputState]: e.target.value })}
+            onChange={(e) => {
+              // Update state
+              setInputsState({ ...inputsState, [inputState]: e.target.value });
+              // Update selectCustom value when selectNative is changed.
+              const value = e.target.value;
+              const elRespectiveCustomOption = findOption("data-value", value);
+              if (elRespectiveCustomOption) {
+                updateCustomSelectChecked(value, elRespectiveCustomOption.textContent as string);
+              }
+            }}
           >
             <option value="">{placeholder}</option>
             {options.map((option: Option, index: number) => (
@@ -183,6 +179,15 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
             <div
               ref={elSelectCustomBox}
               className="selectCustom-trigger"
+              onClick={() => {
+                const isClosed = !elSelectCustom.current?.classList.contains("isActive");
+
+                if (isClosed) {
+                  openSelectCustom();
+                } else {
+                  closeSelectCustom();
+                }
+              }}
             >
               {placeholder}
             </div>
@@ -205,6 +210,15 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
                       // Close select
                       elSelectCustom.current.classList.remove("isActive");
                     }
+
+                    // Sync native select to have the same value
+                    if (elSelectNative.current) elSelectNative.current.value = option.value;
+
+                    // Update State
+                    setInputsState({ ...inputsState, [inputState]: option.value });
+                    // Update checked icon
+                    updateCustomSelectChecked(option.value, option.labor);
+                    closeSelectCustom();
                   }}
                 >
                   {option.labor}
