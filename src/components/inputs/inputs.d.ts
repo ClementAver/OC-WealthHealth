@@ -1,6 +1,6 @@
-type State = { firstName: string; lastName: string; birthDate: Date; startDate: Date; street: string; city: string; state: string; zipCode: number; department: string };
+type State = { firstName: string; lastName: string; birthDate: Date; startDate: Date; street: string; city: string; state: string; zipCode: string; department: string };
 
-type Setter = Dispatch<SetStateAction<{ firstName: string; lastName: string; birthDate: Date; startDate: Date; street: string; city: string; state: string; zipCode: number; department: string }>>;
+type Setter = Dispatch<SetStateAction<{ firstName: string; lastName: string; birthDate: Date; startDate: Date; street: string; city: string; state: string; zipCode: string; department: string }>>;
 
 export interface Option {
   value: string;

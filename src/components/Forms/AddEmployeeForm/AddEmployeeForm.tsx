@@ -6,7 +6,6 @@ import SubmitModal from "../../Modals/SubmitModal/SubmitModal";
 import DatePicker from "react-datepicker";
 import { states, department } from "../../../data/data";
 
-
 export default function AddEmployeeForm() {
   const [inputsState, setInputsState] = useState({
     firstName: "",
@@ -16,7 +15,7 @@ export default function AddEmployeeForm() {
     street: "",
     city: "",
     state: "",
-    zipCode: 94101,
+    zipCode: "",
     department: "",
   });
 
@@ -84,14 +83,14 @@ export default function AddEmployeeForm() {
     //   setShowValidation((state) => ({ ...state, startDate: true }));
     // }
 
-    if (inputsState.street.length < 10) {
+    if (inputsState.street.length < 1 || inputsState.street.length > 128) {
       setShowValidation((state) => ({ ...state, street: true }));
     } else {
       areValid.street = true;
       setShowValidation((state) => ({ ...state, street: false }));
     }
 
-    if (inputsState.city.length < 3) {
+    if (inputsState.city.length < 1 || inputsState.city.length > 64) {
       setShowValidation((state) => ({ ...state, city: true }));
     } else {
       areValid.city = true;
@@ -147,7 +146,7 @@ export default function AddEmployeeForm() {
               id="first-name"
               label="First Name"
               placeholder="John"
-              validationMsg="3-64 caractères"
+              validationMsg="3-64 characters"
             />
           </div>
 
@@ -160,7 +159,7 @@ export default function AddEmployeeForm() {
               id="last-name"
               label="Last Name"
               placeholder="Doe"
-              validationMsg="3-64 caractères"
+              validationMsg="3-64 characters"
             />
           </div>
 
@@ -168,6 +167,7 @@ export default function AddEmployeeForm() {
             <label htmlFor="birthDate">Birth Date</label>
             <DatePicker
               id="birthDate"
+              placeholderText="Click to select a date"
               selected={inputsState.birthDate}
               onChange={(value) => {
                 if (value) setInputsState({ ...inputsState, birthDate: value });
@@ -179,6 +179,7 @@ export default function AddEmployeeForm() {
             <label htmlFor="startDate">Start Date</label>
             <DatePicker
               id="startDate"
+              placeholderText="Click to select a date"
               selected={inputsState.startDate}
               onChange={(value) => {
                 if (value) setInputsState({ ...inputsState, startDate: value });
@@ -202,7 +203,7 @@ export default function AddEmployeeForm() {
             id="street"
             label="Street"
             placeholder="Vonnie Brown 1515 Applewood Road Baton"
-            validationMsg="3-256 caractères"
+            validationMsg="3-256 characters"
           />
         </div>
 
@@ -216,7 +217,7 @@ export default function AddEmployeeForm() {
               id="city"
               label="City"
               placeholder="San Francisco"
-              validationMsg="3-64 caractères"
+              validationMsg="3-64 characters"
             />
           </div>
 
@@ -230,7 +231,7 @@ export default function AddEmployeeForm() {
               label="State"
               placeholder="Choose"
               options={states}
-              validationMsg="Choisir une option"
+              validationMsg="choose an option"
             />
           </div>
 
@@ -243,7 +244,7 @@ export default function AddEmployeeForm() {
               id="zip-code"
               label="Zip&nbsp;Code"
               placeholder="75000"
-              validationMsg="00000"
+              validationMsg="invalid format"
             />
           </div>
         </div>
@@ -260,7 +261,7 @@ export default function AddEmployeeForm() {
             label="Department"
             placeholder="Choose"
             options={department}
-            validationMsg="Choisir une option"
+            validationMsg="choose an option"
           />
         </div>
       </div>
