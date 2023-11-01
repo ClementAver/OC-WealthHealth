@@ -134,7 +134,7 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
 
   return (
     <>
-      <div className="select">
+      <div className="select form__item">
         <span
           className="selectLabel"
           id={id}
