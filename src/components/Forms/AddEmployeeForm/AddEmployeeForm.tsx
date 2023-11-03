@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import { states, department } from "../../../data/data";
 
 export default function AddEmployeeForm() {
+
   const [inputsState, setInputsState] = useState({
     firstName: "",
     lastName: "",
@@ -43,8 +44,10 @@ export default function AddEmployeeForm() {
     const areValid = {
       firstName: false,
       lastName: false,
-      birthDate: false,
-      startDate: false,
+      // birthDate: false,
+      // startDate: false,
+      birthDate: true,
+      startDate: true,
       street: false,
       city: false,
       state: false,

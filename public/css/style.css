@@ -156,6 +156,9 @@ body {
   justify-content: center;
   align-items: center;
 }
+.app > a {
+  align-self: center;
+}
 
 h1 {
   font-size: 2rem;
@@ -308,6 +311,43 @@ h1 {
   transform: translateX(-100%);
 }
 
+table {
+  text-align: center;
+  margin: 0 auto 1rem;
+  max-width: 1200px;
+  overflow: scroll;
+}
+
+th {
+  padding: 1rem;
+  border-bottom: 1px solid black;
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 900;
+}
+th:last-child {
+  border-right: none;
+}
+
+tr:nth-child(even) {
+  background-color: none;
+}
+
+td {
+  padding: 0.8rem 0.4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  max-width: 140px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+td:nth-child(even) {
+  background-color: none;
+}
+
 .home {
   display: flex;
   flex-flow: column nowrap;
@@ -320,6 +360,21 @@ h1 {
   margin-bottom: 2rem;
 }
 .home a {
+  margin: auto;
+}
+
+.employee {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  padding: 1rem;
+}
+.employee h1 {
+  width: 100%;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+.employee a {
   margin: auto;
 }
 

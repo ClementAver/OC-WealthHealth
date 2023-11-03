@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import type { State } from "../../inputs/inputs";
+import { useDispatch } from "react-redux";
+import { add } from "../../../features/employees/employees";
 
 export default function Modal({ btnText, mdlText, validation, inputsState }: { btnText: string; mdlText: string; validation: (a: State) => boolean; inputsState: State }) {
+  const dispatch = useDispatch();
+
   const [showModal, setShowModal] = useState(false);
 
   function handleOpen() {
@@ -37,7 +41,10 @@ export default function Modal({ btnText, mdlText, validation, inputsState }: { b
         className="button button__submit"
         onClick={(e) => {
           e.stopPropagation();
-          if (validation(inputsState)) handleOpen();
+          if (validation(inputsState)) {
+            dispatch(add(inputsState));
+            handleOpen();
+          }
         }}
       >
         {btnText}

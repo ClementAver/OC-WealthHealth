@@ -1,0 +1,17 @@
+.employee {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+
+  padding: 1rem;
+
+  h1 {
+    width: 100%;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  a {
+    margin: auto;
+  }
+}

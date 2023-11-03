@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counter from "../../features/counter/counter";
+import employees from "../../features/employees/employees";
 
 export const store = configureStore({
   reducer: {
-    counter,
+    employees,
   },
 });
-

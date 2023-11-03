@@ -153,6 +153,10 @@ body {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+
+  > a {
+    align-self: center;
+  }
 }
 
 h1 {
@@ -162,8 +166,10 @@ h1 {
 
 @import "globals/forms.scss";
 @import "globals/buttons.scss";
+@import "globals/table.scss";
 
 @import "pages/Home.scss";
+@import "pages/EmployeeList.scss";
 
 @import "components/Header.scss";
 @import "components/Modal.scss";
