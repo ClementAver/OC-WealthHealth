@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import { states, department } from "../../../data/data";
 
 export default function AddEmployeeForm() {
-
   const [inputsState, setInputsState] = useState({
     firstName: "",
     lastName: "",
@@ -44,10 +43,8 @@ export default function AddEmployeeForm() {
     const areValid = {
       firstName: false,
       lastName: false,
-      // birthDate: false,
-      // startDate: false,
-      birthDate: true,
-      startDate: true,
+      birthDate: false,
+      startDate: false,
       street: false,
       city: false,
       state: false,
@@ -55,7 +52,7 @@ export default function AddEmployeeForm() {
       department: false,
     };
 
-    // const dateReg = /(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0,1,2])\/(19|20)\d{2}/gm;
+    const dateReg = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (0[1-9]|[12][0-9]|3[01]) \d{4}$/;
 
     if (inputsState.firstName.length < 1 || inputsState.firstName.length > 64) {
       // Ci-dessous, on passe le state en argument car plusieurs modifications de state sont possible au cours de l'exécution de la fonction, ainsi chaque instruction modifiant le state utilisera le retour de l'instruction précédente.
@@ -72,19 +69,19 @@ export default function AddEmployeeForm() {
       setShowValidation((state) => ({ ...state, lastName: false }));
     }
 
-    // if (inputsState.birthDate.match(dateReg)) {
-    //   areValid.birthDate = true;
-    //   setShowValidation((state) => ({ ...state, birthDate: false }));
-    // } else {
-    //   setShowValidation((state) => ({ ...state, birthDate: true }));
-    // }
+    if (inputsState.birthDate.toString().slice(0, 15).match(dateReg)) {
+      areValid.birthDate = true;
+      setShowValidation((state) => ({ ...state, birthDate: false }));
+    } else {
+      setShowValidation((state) => ({ ...state, birthDate: true }));
+    }
 
-    // if (inputsState.startDate.match(dateReg)) {
-    //   areValid.startDate = true;
-    //   setShowValidation((state) => ({ ...state, startDate: false }));
-    // } else {
-    //   setShowValidation((state) => ({ ...state, startDate: true }));
-    // }
+    if (inputsState.startDate.toString().slice(0, 15).match(dateReg)) {
+      areValid.startDate = true;
+      setShowValidation((state) => ({ ...state, startDate: false }));
+    } else {
+      setShowValidation((state) => ({ ...state, startDate: true }));
+    }
 
     if (inputsState.street.length < 1 || inputsState.street.length > 128) {
       setShowValidation((state) => ({ ...state, street: true }));

@@ -25,8 +25,8 @@ export default function EmployeesTable() {
             <tr key={index}>
               <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>
-              <td>{employee.birthDate.toString().slice(0, 10)}</td>
-              <td>{employee.startDate.toString().slice(0, 10)}</td>
+              <td>{employee.birthDate.toString().slice(0, 15)}</td>
+              <td>{employee.startDate.toString().slice(0, 15)}</td>
               <td>{employee.department}</td>
               <td>{employee.street}</td>
               <td>{employee.city}</td>
