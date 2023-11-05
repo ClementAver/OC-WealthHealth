@@ -1,10 +1,10 @@
 import { useRef } from "react";
-import { SelectProps, Option } from "../inputs";
+import { SelectProps, Option, State, Setter } from "../inputs";
 
 // This component is based on the following article :
 // https://css-tricks.com/striking-a-balance-between-native-and-custom-select-elements/
 
-export default function Select({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, options, validationMsg }: SelectProps) {
+export default function Select({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, options, validationMsg }: SelectProps<State, Setter>) {
   // The main div for the native select element.
   const elSelectNative = useRef<HTMLSelectElement>(null);
 
@@ -134,100 +134,98 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
 
   return (
     <>
-      <div className="select form__item">
-        <span
-          className="selectLabel"
-          id={id}
+      <span
+        className="selectLabel"
+        id={id}
+      >
+        {label}
+      </span>
+      <div className="selectWrapper">
+        <select
+          ref={elSelectNative}
+          className="selectNative js-selectNative"
+          aria-labelledby={id}
+          name={id}
+          value={inputsState[inputState as keyof typeof inputsState].toString()}
+          onChange={(e) => {
+            // Update state
+            setInputsState({ ...inputsState, [inputState]: e.target.value });
+            // Update selectCustom value when selectNative is changed.
+            const value = e.target.value;
+            const elRespectiveCustomOption = findOption("data-value", value);
+            if (elRespectiveCustomOption) {
+              updateCustomSelectChecked(value, elRespectiveCustomOption.textContent as string);
+            }
+          }}
         >
-          {label}
-        </span>
-        <div className="selectWrapper">
-          <select
-            ref={elSelectNative}
-            className="selectNative js-selectNative"
-            aria-labelledby={id}
-            name={id}
-            value={inputsState[inputState as keyof typeof inputsState].toString()}
-            onChange={(e) => {
-              // Update state
-              setInputsState({ ...inputsState, [inputState]: e.target.value });
-              // Update selectCustom value when selectNative is changed.
-              const value = e.target.value;
-              const elRespectiveCustomOption = findOption("data-value", value);
-              if (elRespectiveCustomOption) {
-                updateCustomSelectChecked(value, elRespectiveCustomOption.textContent as string);
+          <option value="">{placeholder}</option>
+          {options.map((option: Option, index: number) => (
+            <option
+              key={index}
+              value={option.value}
+            >
+              {option.labor}
+            </option>
+          ))}
+        </select>
+
+        {/* Hide the custom select from AT (e.g. SR) using aria-hidden */}
+        <div
+          ref={elSelectCustom}
+          className="selectCustom js-selectCustom"
+          aria-hidden="true"
+        >
+          <div
+            ref={elSelectCustomBox}
+            className="selectCustom-trigger"
+            onClick={() => {
+              const isClosed = !elSelectCustom.current?.classList.contains("isActive");
+
+              if (isClosed) {
+                openSelectCustom();
+              } else {
+                closeSelectCustom();
               }
             }}
           >
-            <option value="">{placeholder}</option>
+            {placeholder}
+          </div>
+          <div
+            ref={elSelectCustomOpts}
+            className="selectCustom-options"
+          >
             {options.map((option: Option, index: number) => (
-              <option
+              <div
+                ref={(element) => element && customOptsList.current.push(element)}
+                className="selectCustom-option"
                 key={index}
-                value={option.value}
+                data-value={option.value}
+                onClick={() => {
+                  if (elSelectCustomBox && elSelectCustomBox.current) {
+                    // Update custom select text too
+                    elSelectCustomBox.current.textContent = option.labor;
+                  }
+                  if (elSelectCustom && elSelectCustom.current) {
+                    // Close select
+                    elSelectCustom.current.classList.remove("isActive");
+                  }
+
+                  // Sync native select to have the same value
+                  if (elSelectNative.current) elSelectNative.current.value = option.value;
+
+                  // Update State
+                  setInputsState({ ...inputsState, [inputState]: option.value });
+                  // Update checked icon
+                  updateCustomSelectChecked(option.value, option.labor);
+                  closeSelectCustom();
+                }}
               >
                 {option.labor}
-              </option>
+              </div>
             ))}
-          </select>
-
-          {/* Hide the custom select from AT (e.g. SR) using aria-hidden */}
-          <div
-            ref={elSelectCustom}
-            className="selectCustom js-selectCustom"
-            aria-hidden="true"
-          >
-            <div
-              ref={elSelectCustomBox}
-              className="selectCustom-trigger"
-              onClick={() => {
-                const isClosed = !elSelectCustom.current?.classList.contains("isActive");
-
-                if (isClosed) {
-                  openSelectCustom();
-                } else {
-                  closeSelectCustom();
-                }
-              }}
-            >
-              {placeholder}
-            </div>
-            <div
-              ref={elSelectCustomOpts}
-              className="selectCustom-options"
-            >
-              {options.map((option: Option, index: number) => (
-                <div
-                  ref={(element) => element && customOptsList.current.push(element)}
-                  className="selectCustom-option"
-                  key={index}
-                  data-value={option.value}
-                  onClick={() => {
-                    if (elSelectCustomBox && elSelectCustomBox.current) {
-                      // Update custom select text too
-                      elSelectCustomBox.current.textContent = option.labor;
-                    }
-                    if (elSelectCustom && elSelectCustom.current) {
-                      // Close select
-                      elSelectCustom.current.classList.remove("isActive");
-                    }
-
-                    // Sync native select to have the same value
-                    if (elSelectNative.current) elSelectNative.current.value = option.value;
-
-                    // Update State
-                    setInputsState({ ...inputsState, [inputState]: option.value });
-                    // Update checked icon
-                    updateCustomSelectChecked(option.value, option.labor);
-                    closeSelectCustom();
-                  }}
-                >
-                  {option.labor}
-                </div>
-              ))}
-            </div>
           </div>
-          {showValidation && <p className="native-select__invalid-msg invalid">{validationMsg}</p>}
         </div>
+        {showValidation && <p className="native-select__invalid-msg invalid">{validationMsg}</p>}
       </div>
     </>
   );

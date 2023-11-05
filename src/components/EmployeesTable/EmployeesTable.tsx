@@ -1,11 +1,48 @@
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import type { State } from "../../components/inputs/inputs";
+import Select from "../inputs/Select/Select";
+import TextInput from "../inputs/TextInput/TextInput";
 
 export default function EmployeesTable() {
   const employees = useSelector((state: { employees: [State] }) => state.employees);
 
+  const [inputsState, setInputsState] = useState({ showEntries: "10", search: "" });
+
   return (
-    <>
+    <div className="employees-table">
+      <form className="form">
+        <div className="form__container">
+          <div className="form__item form__item--half">
+            <Select
+              inputsState={inputsState}
+              inputState="showEntries"
+              setInputsState={setInputsState}
+              id="entries-displayed"
+              label="Entries displayed :"
+              placeholder={"Default (10)"}
+              options={[
+                { value: "10", labor: "10" },
+                { value: "25", labor: "25" },
+                { value: "50", labor: "50" },
+                { value: "100", labor: "100" },
+              ]}
+            />
+          </div>
+
+          <div className="form__item form__item--half">
+            <TextInput
+              inputsState={inputsState}
+              inputState="search"
+              setInputsState={setInputsState}
+              id="search"
+              label="Search"
+              placeholder="John"
+            />
+          </div>
+        </div>
+      </form>
+
       <table className="table">
         <thead>
           <tr>
@@ -36,6 +73,6 @@ export default function EmployeesTable() {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }

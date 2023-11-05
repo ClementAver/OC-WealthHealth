@@ -1,6 +1,6 @@
-import { TextProps } from "../inputs";
+import { TextProps, State, Setter } from "../inputs";
 
-export default function TextInput({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, validationMsg }: TextProps) {
+export default function TextInput({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, validationMsg }: TextProps<State, Setter>) {
   return (
     <>
       <label htmlFor={id}>{label}</label>

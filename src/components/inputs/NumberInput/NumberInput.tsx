@@ -1,6 +1,6 @@
-import type { NumberProps } from "../inputs";
+import type { NumberProps, State, Setter } from "../inputs";
 
-export default function NumberInput({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, validationMsg }: NumberProps) {
+export default function NumberInput({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, validationMsg }: NumberProps<State, Setter>) {
   return (
     <>
       <label htmlFor={id}>{label}</label>
