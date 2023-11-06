@@ -1,15 +1,8 @@
-// type State = { firstName: string; lastName: string; birthDate: Date; startDate: Date; street: string; city: string; state: string; zipCode: string; department: string };
-
 interface State {
   [name: string | Date];
 }
 
-type Setter = Dispatch<SetStateAction<{ [name: string | Date]: object }>>;
-
-export interface Option {
-  value: string;
-  labor: string;
-}
+type Setter = Dispatch<SetStateAction<{ [name: string | Date | boolean]: object }>>;
 
 export interface Props<A, B> {
   id: string;
@@ -30,4 +23,9 @@ export type NumberProps<A, B> = TextProps<A, B>;
 export interface SelectProps<A, B> extends Props<A, B> {
   placeholder: string;
   options: Option[];
+}
+
+export interface Option {
+  value: string;
+  labor: string;
 }

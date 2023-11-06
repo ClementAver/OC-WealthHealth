@@ -14,6 +14,9 @@ export const employees = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
+      for (const key in action.payload) {
+        if (typeof action.payload[key] !== "string") action.payload[key] = action.payload[key].toString();
+      }
       state.push(action.payload);
     },
   },

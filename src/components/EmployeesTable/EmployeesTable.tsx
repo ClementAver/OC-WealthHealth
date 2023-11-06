@@ -1,13 +1,30 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import type { State } from "../../components/inputs/inputs";
+import type { State } from "../../types/inputs";
 import Select from "../inputs/Select/Select";
 import TextInput from "../inputs/TextInput/TextInput";
+import { Employee } from "../../types/employees";
 
 export default function EmployeesTable() {
   const employees = useSelector((state: { employees: [State] }) => state.employees);
 
   const [inputsState, setInputsState] = useState({ showEntries: "10", search: "" });
+
+  const filteredEmployees: Employee[] = [];
+
+  const searchAlgorithm = (search: string) => {
+    employees.forEach((employee) => {
+      let matches = false;
+      for (const property in employee) {
+        if (employee[property].toString().toLowerCase().includes(search.toLowerCase())) {
+          matches = true;
+        }
+      }
+      if (matches) filteredEmployees.push(employee as Employee);
+    });
+  };
+
+  searchAlgorithm(inputsState.search);
 
   return (
     <div className="employees-table">
@@ -58,7 +75,7 @@ export default function EmployeesTable() {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee, index) => (
+          {filteredEmployees.map((employee, index) => (
             <tr key={index}>
               <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>

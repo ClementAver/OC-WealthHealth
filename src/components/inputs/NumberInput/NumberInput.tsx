@@ -1,4 +1,4 @@
-import type { NumberProps, State, Setter } from "../inputs";
+import type { NumberProps, State, Setter } from "../../../types/inputs";
 
 export default function NumberInput({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, validationMsg }: NumberProps<State, Setter>) {
   return (

@@ -18,7 +18,8 @@
     font-weight: 900;
     padding: 0.4rem 1.4rem;
 
-    &:hover::before {
+    &:hover::before,
+    :focus::before {
       transform: translateX(0);
     }
 

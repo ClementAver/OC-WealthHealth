@@ -1,4 +1,4 @@
-import { TextProps, State, Setter } from "../inputs";
+import { TextProps, State, Setter } from "../../../types/inputs";
 
 export default function TextInput({ inputsState, inputState, setInputsState, showValidation, id, label, placeholder, validationMsg }: TextProps<State, Setter>) {
   return (

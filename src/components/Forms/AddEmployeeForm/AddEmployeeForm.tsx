@@ -33,10 +33,6 @@ export default function AddEmployeeForm() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    if (validation()) {
-      console.log(inputsState);
-    }
   }
 
   function validation() {
@@ -118,9 +114,6 @@ export default function AddEmployeeForm() {
       setShowValidation((state) => ({ ...state, department: false }));
     }
 
-    console.log(inputsState);
-    console.log(areValid);
-
     // Ici "Object.values" créé un tableau avec les valeurs d'un objet, et every vérifie que la callback passée renvoie bien true pour chaque index. True est renvoyé si c'est le cas. Sinon, c'est false.
     return Object.values(areValid).every((value) => value);
   }
@@ -173,6 +166,7 @@ export default function AddEmployeeForm() {
                 if (value) setInputsState({ ...inputsState, birthDate: value });
               }}
             />
+            {showValidation.birthDate && <p className="invalid">Invalid Date</p>}
           </div>
 
           <div className={`form__item  form__item--half ${showValidation.startDate ? "form__item--invalid" : ""}`}>
@@ -185,6 +179,7 @@ export default function AddEmployeeForm() {
                 if (value) setInputsState({ ...inputsState, startDate: value });
               }}
             />
+            {showValidation.startDate && <p className="invalid">Invalid Date</p>}
           </div>
         </div>
       </fieldset>
@@ -208,7 +203,7 @@ export default function AddEmployeeForm() {
         </div>
 
         <div className="form__container">
-          <div className={`form__item  form__item--third ${showValidation.city ? "form__item--invalid" : ""}`}>
+          <div className={`form__item  form__item--half ${showValidation.city ? "form__item--invalid" : ""}`}>
             <TextInput
               inputsState={inputsState}
               inputState="city"
@@ -221,7 +216,7 @@ export default function AddEmployeeForm() {
             />
           </div>
 
-          <div className={`form__item  form__item--third ${showValidation.state ? "form__item--invalid" : ""}`}>
+          <div className={`form__item  form__item--half ${showValidation.state ? "form__item--invalid" : ""}`}>
             <Select
               inputsState={inputsState}
               inputState="state"
@@ -235,7 +230,7 @@ export default function AddEmployeeForm() {
             />
           </div>
 
-          <div className={`form__item  form__item--third ${showValidation.state ? "form__item--invalid" : ""}`}>
+          <div className={`form__item  ${showValidation.zipCode ? "form__item--invalid" : ""}`}>
             <NumberInput
               inputsState={inputsState}
               inputState="zipCode"
@@ -271,6 +266,8 @@ export default function AddEmployeeForm() {
         mdlText="Employee created !"
         validation={validation}
         inputsState={inputsState}
+        setInputsState={setInputsState}
+        setShowValidation={setShowValidation}
       />
     </form>
   );

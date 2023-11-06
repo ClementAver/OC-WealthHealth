@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { SelectProps, Option, State, Setter } from "../inputs";
+import { SelectProps, Option, State, Setter } from "../../../types/inputs";
 
 // This component is based on the following article :
 // https://css-tricks.com/striking-a-balance-between-native-and-custom-select-elements/

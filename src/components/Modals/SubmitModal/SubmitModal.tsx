@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
-import type { State } from "../../inputs/inputs";
+import type { Setter, State } from "../../../types/inputs";
 import { useDispatch } from "react-redux";
 import { add } from "../../../features/employees/employees";
 
-export default function Modal({ btnText, mdlText, validation, inputsState }: { btnText: string; mdlText: string; validation: (a: State) => boolean; inputsState: State }) {
+export default function Modal({ btnText, mdlText, validation, inputsState, setInputsState, setShowValidation }: { btnText: string; mdlText: string; validation: (a: State) => boolean; inputsState: State; setInputsState: Setter; setShowValidation: Setter }) {
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +42,13 @@ export default function Modal({ btnText, mdlText, validation, inputsState }: { b
         onClick={(e) => {
           e.stopPropagation();
           if (validation(inputsState)) {
+
             dispatch(add(inputsState));
+
+            setShowValidation({ firstName: false, lastName: false, birthDate: false, startDate: false, street: false, city: false, state: false, zipCode: false, department: false });
+
+            setInputsState({ firstName: "", lastName: "", birthDate: new Date(), startDate: new Date(), street: "", city: "", state: "", zipCode: "", department: "" });
+
             handleOpen();
           }
         }}
