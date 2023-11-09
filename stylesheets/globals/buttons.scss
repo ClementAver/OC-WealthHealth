@@ -19,7 +19,7 @@
     padding: 0.4rem 1.4rem;
 
     &:hover::before,
-    :focus::before {
+    &:focus::before {
       transform: translateX(0);
     }
 

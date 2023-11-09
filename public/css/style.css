@@ -291,8 +291,7 @@ h1 {
   font-weight: 900;
   padding: 0.4rem 1.4rem;
 }
-.button__submit:hover::before,
-.button__submit :focus::before {
+.button__submit:hover::before, .button__submit:focus::before {
   transform: translateX(0);
 }
 .button__submit::before {

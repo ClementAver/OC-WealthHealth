@@ -1,19 +1,24 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { State } from "../../types/inputs";
 import Select from "../inputs/Select/Select";
 import TextInput from "../inputs/TextInput/TextInput";
 import { Employee } from "../../types/employees";
-import _ from "lodash";
+// import _ from "lodash";
 
 export default function EmployeesTable() {
   const employeesState = useSelector((state: { employees: [State] }) => state.employees);
 
+  const [inputsState, setInputsState] = useState({ showEntries: "10", search: "", sortBy: "" });
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  const prevEntriesCount = useRef(inputsState.showEntries);
+  // Will be mapped on.
   const [employees, setEmployees] = useState(employeesState.map((employee) => ({ ...employee })));
-  const [inputsState, setInputsState] = useState({ showEntries: "10", search: "" });
 
   useEffect(() => {
-    // Search filter algorithm
+    // Searching logic
     const filteredEmployees: Employee[] = [];
 
     employeesState.forEach((employee) => {
@@ -26,16 +31,39 @@ export default function EmployeesTable() {
       if (matches) filteredEmployees.push(employee as Employee);
     });
 
-    setEmployees(filteredEmployees);
-  }, [inputsState.search, employeesState]);
+    // Sorting logic
+    if (inputsState.sortBy.includes("Date")) {
+      if (inputsState.sortBy.includes("reverse")) {
+        const property = inputsState.sortBy.slice(0, inputsState.sortBy.indexOf("-"));
 
-  const filterBy = (property: string, reverse?: string) => {
-    // Deep copy
-    const sortable = _.cloneDeep(employees);
-    // Sorting
-    sortable.sort((a, b) => (a[property] == b[property] ? 0 : a[property] < b[property] ? -1 : 1));
-    reverse ? setEmployees(sortable.reverse()) : setEmployees(sortable);
-  };
+        filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[property] ? 0 : new Date(a[property]) > new Date(b[property]) ? -1 : 1));
+      } else {
+        filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[inputsState.sortBy] ? 0 : new Date(a[inputsState.sortBy]) < new Date(b[inputsState.sortBy]) ? -1 : 1));
+      }
+    } else {
+      if (inputsState.sortBy.includes("reverse")) {
+        const property = inputsState.sortBy.slice(0, inputsState.sortBy.indexOf("-"));
+        filteredEmployees.sort((a, b) => (a[property] == b[property] ? 0 : a[property].toLowerCase() > b[property].toLowerCase() ? -1 : 1));
+      } else {
+        filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[inputsState.sortBy] ? 0 : a[inputsState.sortBy].toLowerCase() < b[inputsState.sortBy].toLowerCase() ? -1 : 1));
+      }
+    }
+
+    // Paging logic
+
+    if (prevEntriesCount.current !== inputsState.showEntries) {
+      setPage(1);
+    }
+
+    prevEntriesCount.current = inputsState.showEntries;
+
+    const sortedEmployees = filteredEmployees;
+    const entriesCount = parseInt(inputsState.showEntries);
+
+    setTotal(sortedEmployees.length);
+    const toDisplay = sortedEmployees.slice(page * entriesCount - entriesCount, page * entriesCount - entriesCount + entriesCount);
+    setEmployees(toDisplay);
+  }, [inputsState, page, employeesState]);
 
   return (
     <div className="employees-table">
@@ -77,64 +105,64 @@ export default function EmployeesTable() {
             <th scope="col">
               First Name
               <div>
-                <button onClick={() => filterBy("firstName")}>▴</button>
-                <button onClick={() => filterBy("firstName", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Last Name{" "}
               <div>
-                <button onClick={() => filterBy("lastName")}>▴</button>
-                <button onClick={() => filterBy("lastName", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Date of Birth{" "}
               <div>
-                <button onClick={() => filterBy("birthDate")}>▴</button>
-                <button onClick={() => filterBy("birthDate", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Start Date{" "}
               <div>
-                <button onClick={() => filterBy("startDate")}>▴</button>
-                <button onClick={() => filterBy("startDate", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Department{" "}
               <div>
-                <button onClick={() => filterBy("department")}>▴</button>
-                <button onClick={() => filterBy("department", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Street{" "}
               <div>
-                <button onClick={() => filterBy("street")}>▴</button>
-                <button onClick={() => filterBy("street", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               City{" "}
               <div>
-                <button onClick={() => filterBy("city")}>▴</button>
-                <button onClick={() => filterBy("city", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               State{" "}
               <div>
-                <button onClick={() => filterBy("state")}>▴</button>
-                <button onClick={() => filterBy("state", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Zip Code{" "}
               <div>
-                <button onClick={() => filterBy("zipCode")}>▴</button>
-                <button onClick={() => filterBy("zipCode", "reverse")}>▾</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode" }))}>▴</button>
+                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode-reverse" }))}>▾</button>
               </div>
             </th>
           </tr>
@@ -155,6 +183,23 @@ export default function EmployeesTable() {
           ))}
         </tbody>
       </table>
+      <div>
+        <button
+          onClick={() => {
+            if (page > 1) setPage(page - 1);
+          }}
+        >
+          ◂
+        </button>
+        <span>page : {page}</span>
+        <button
+          onClick={() => {
+            if (page * parseInt(inputsState.showEntries) < total) setPage(page + 1);
+          }}
+        >
+          ▸
+        </button>
+      </div>
     </div>
   );
 }
