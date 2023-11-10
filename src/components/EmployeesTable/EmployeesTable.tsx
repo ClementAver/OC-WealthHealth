@@ -4,7 +4,6 @@ import type { State } from "../../types/inputs";
 import Select from "../inputs/Select/Select";
 import TextInput from "../inputs/TextInput/TextInput";
 import { Employee } from "../../types/employees";
-// import _ from "lodash";
 
 export default function EmployeesTable() {
   const employeesState = useSelector((state: { employees: [State] }) => state.employees);
@@ -104,63 +103,63 @@ export default function EmployeesTable() {
           <tr>
             <th scope="col">
               First Name
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Last Name{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Date of Birth{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Start Date{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Department{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Street{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               City{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               State{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state-reverse" }))}>▾</button>
               </div>
             </th>
             <th scope="col">
               Zip Code{" "}
-              <div>
+              <div className="container-sort">
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode" }))}>▴</button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode-reverse" }))}>▾</button>
               </div>
@@ -183,21 +182,23 @@ export default function EmployeesTable() {
           ))}
         </tbody>
       </table>
-      <div>
+      <div className="paging">
         <button
           onClick={() => {
             if (page > 1) setPage(page - 1);
           }}
         >
-          ◂
+          <i className="fa-solid fa-chevron-left"></i>
         </button>
-        <span>page : {page}</span>
+        <span>
+          page {page} of {Math.ceil(total / parseInt(inputsState.showEntries))}
+        </span>
         <button
           onClick={() => {
             if (page * parseInt(inputsState.showEntries) < total) setPage(page + 1);
           }}
         >
-          ▸
+          <i className="fa-solid fa-chevron-right"></i>
         </button>
       </div>
     </div>

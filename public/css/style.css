@@ -637,5 +637,126 @@ td:nth-child(even) {
 .employees-table .form__item {
   max-width: fit-content;
 }
+.employees-table th {
+  position: relative;
+  padding-right: 1.5rem;
+}
+.employees-table .container-sort {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.employees-table .container-sort button {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 0.5rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+.employees-table button {
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
+}
+.employees-table button:hover {
+  color: rgb(0, 0, 0);
+}
+.employees-table .paging {
+  align-self: center;
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+}
+.employees-table .paging span {
+  padding: 0.4rem;
+}
+.employees-table .paging button {
+  color: rgb(0, 0, 0);
+  font-size: 0.6rem;
+  font-family: "Inter", sans-serif;
+  line-height: 1rem;
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0);
+}
+.employees-table .paging button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.employees-table {
+  display: flex;
+  flex-flow: column nowrap;
+  width: max-content;
+  margin: auto;
+}
+.employees-table .form {
+  margin-bottom: 0;
+  width: 100%;
+  max-width: none;
+}
+.employees-table .form__container {
+  width: 100%;
+  justify-content: space-between;
+}
+.employees-table .form__item {
+  max-width: fit-content;
+}
+.employees-table th {
+  position: relative;
+  padding-right: 1.5rem;
+}
+.employees-table .container-sort {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.employees-table .container-sort button {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 0.5rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+.employees-table button {
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
+}
+.employees-table button:hover {
+  color: rgb(0, 0, 0);
+}
+.employees-table .paging {
+  align-self: center;
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+}
+.employees-table .paging span {
+  padding: 0.4rem;
+}
+.employees-table .paging button {
+  color: rgb(0, 0, 0);
+  font-size: 0.6rem;
+  font-family: "Inter", sans-serif;
+  line-height: 1rem;
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0);
+}
+.employees-table .paging button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 
 /*# sourceMappingURL=style.css.map */
