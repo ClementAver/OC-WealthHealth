@@ -19,6 +19,7 @@ export default function AddEmployeeForm() {
     department: "",
   });
 
+  // Will the warning messages be displayed ?
   const [showValidation, setShowValidation] = useState({
     firstName: false,
     lastName: false,
@@ -35,7 +36,8 @@ export default function AddEmployeeForm() {
     e.preventDefault();
   }
 
-  function validation() {
+  function validation(): boolean {
+    // Will be used to know if validation passes or not.
     const areValid = {
       firstName: false,
       lastName: false,
@@ -51,7 +53,8 @@ export default function AddEmployeeForm() {
     const dateReg = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (0[1-9]|[12][0-9]|3[01]) \d{4}$/;
 
     if (inputsState.firstName.length < 1 || inputsState.firstName.length > 64) {
-      // Ci-dessous, on passe le state en argument car plusieurs modifications de state sont possible au cours de l'exécution de la fonction, ainsi chaque instruction modifiant le state utilisera le retour de l'instruction précédente.
+      // Below, we pass the state as an argument because several state modifications are possible during the execution of the function, so each instruction modifying the state will use the return from the previous instruction.
+      // This battery of tests aims to define which error messages are to be displayed and which aren't (+ they sets the areValid properties).
       setShowValidation((state) => ({ ...state, firstName: true }));
     } else {
       areValid.firstName = true;

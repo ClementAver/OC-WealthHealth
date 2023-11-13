@@ -63,6 +63,7 @@ export const employees = createSlice({
   reducers: {
     add: (state, action) => {
       for (const key in action.payload) {
+        // If other than a string is passed, it is converted into one (used here for datepickers).
         if (typeof action.payload[key] !== "string") action.payload[key] = action.payload[key].toString();
       }
       state.push(action.payload);

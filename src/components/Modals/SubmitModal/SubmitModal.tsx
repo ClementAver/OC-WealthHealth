@@ -5,6 +5,18 @@ import { useDispatch } from "react-redux";
 import { add } from "../../../features/employees/employees";
 
 export default function Modal({ btnText, mdlText, validation, inputsState, setInputsState, setShowValidation }: { btnText: string; mdlText: string; validation: (a: State) => boolean; inputsState: State; setInputsState: Setter; setShowValidation: Setter }) {
+  /*
+  Props :
+    *a string representing the button text content;
+    *a string representing the modal text content;
+    *a test function;
+    *a state reprensenting the values to be tested - object;
+    *the above state setter, used here to empty the inputs if the validation passes;
+    *a setter for the state responsible for displaying error messages,
+     used here to manually swap them to false in order to hide those messages
+     when validation passes and inputs are emptied.
+  */
+
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
@@ -41,14 +53,17 @@ export default function Modal({ btnText, mdlText, validation, inputsState, setIn
         className="button button__submit"
         onClick={(e) => {
           e.stopPropagation();
+          // If validation passes
           if (validation(inputsState)) {
-
+            // We update the redux state.
             dispatch(add(inputsState));
 
+            // Sets the showValidation state properties on false (to hide the warnings messages on submit even if we empty the inputs)
             setShowValidation({ firstName: false, lastName: false, birthDate: false, startDate: false, street: false, city: false, state: false, zipCode: false, department: false });
 
             setInputsState({ firstName: "", lastName: "", birthDate: new Date(), startDate: new Date(), street: "", city: "", state: "", zipCode: "", department: "" });
 
+            // Show the modal
             handleOpen();
           }
         }}

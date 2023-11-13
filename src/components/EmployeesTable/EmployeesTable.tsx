@@ -17,10 +17,11 @@ export default function EmployeesTable() {
   /* 
     Allow us to get around the fact that inputsState.showEntries
     isn't a valid value ("empty string")
-    to be passed to parseInt(number) at first render.
+    to be passed to parseInt() at first render.
   */
   if (inputsState.showEntries !== "" && parseInt(inputsState.showEntries) !== entriesCount) setEntriesCount(parseInt(inputsState.showEntries));
 
+  // Current component page.
   const [page, setPage] = useState(1);
   // The total length of the employees displayed.
   const [total, setTotal] = useState(0);
@@ -34,10 +35,11 @@ export default function EmployeesTable() {
     // Searching logic
     const filteredEmployees: Employee[] = [];
 
+    // If one one the Employee's property contains the shearch value, the employee is pushed into the filteredEmployees array.
     employeesState.forEach((employee) => {
       let matches = false;
       for (const property in employee) {
-        if (employee[property].toString().toLowerCase().includes(inputsState.search.toLowerCase())) {
+        if (employee[property].toLowerCase().includes(inputsState.search.toLowerCase())) {
           matches = true;
         }
       }
@@ -45,10 +47,12 @@ export default function EmployeesTable() {
     });
 
     // Sorting logic
+    // We compare Date objects independently.
     if (inputsState.sortBy.includes("Date")) {
+      // If reverse is specified, we sort then reverse the array.
       if (inputsState.sortBy.includes("reverse")) {
         const property = inputsState.sortBy.slice(0, inputsState.sortBy.indexOf("-"));
-
+        // If the two values are different, we sort them.
         filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[property] ? 0 : new Date(a[property]) > new Date(b[property]) ? -1 : 1));
       } else {
         filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[inputsState.sortBy] ? 0 : new Date(a[inputsState.sortBy]) < new Date(b[inputsState.sortBy]) ? -1 : 1));
@@ -61,18 +65,28 @@ export default function EmployeesTable() {
         filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[inputsState.sortBy] ? 0 : a[inputsState.sortBy].toLowerCase() < b[inputsState.sortBy].toLowerCase() ? -1 : 1));
       }
     }
+
+    // Renaming for clarity reason.
     const sortedEmployees = filteredEmployees;
 
     // Paging logic
+    /* 
+      If the select input or the total length of the displayed employees evolves,
+      then we reset the UI to the first page.
+    */
     if (prevEntriesCount.current !== entriesCount || total !== sortedEmployees.length) {
       setPage(1);
     }
-    setTotal(sortedEmployees.length);
 
+    // Then the total state is updated.
+    setTotal(sortedEmployees.length);
+    // Same here.
     prevEntriesCount.current = entriesCount;
 
+    // We assign to the table the employees corresponding to the page and the number of entries selected.
     const toDisplay = sortedEmployees.slice(page * entriesCount - entriesCount, page * entriesCount - entriesCount + entriesCount);
 
+    // Finally, the employees state is updated
     setEmployees(toDisplay);
   }, [inputsState, employeesState, page, entriesCount, total]);
 
