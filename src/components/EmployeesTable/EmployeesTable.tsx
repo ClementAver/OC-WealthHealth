@@ -6,14 +6,28 @@ import TextInput from "../inputs/TextInput/TextInput";
 import { Employee } from "../../types/employees";
 
 export default function EmployeesTable() {
+  // Redux state recovery
   const employeesState = useSelector((state: { employees: [State] }) => state.employees);
 
-  const [inputsState, setInputsState] = useState({ showEntries: "10", search: "", sortBy: "" });
+  const [inputsState, setInputsState] = useState({ showEntries: "", search: "", sortBy: "" });
+
+  // Number of entries to be displayed
+  const [entriesCount, setEntriesCount] = useState(10);
+
+  /* 
+    Allow us to get around the fact that inputsState.showEntries
+    isn't a valid value ("empty string")
+    to be passed to parseInt(number) at first render.
+  */
+  if (inputsState.showEntries !== "" && parseInt(inputsState.showEntries) !== entriesCount) setEntriesCount(parseInt(inputsState.showEntries));
+
   const [page, setPage] = useState(1);
+  // The total length of the employees displayed.
   const [total, setTotal] = useState(0);
 
-  const prevEntriesCount = useRef(inputsState.showEntries);
-  // Will be mapped on.
+  // Previous number of entries displayed (used to reset page state when inputsState evolves).
+  const prevEntriesCount = useRef(entriesCount);
+  // Array containing all the filtered then sorted employees (will be mapped on).
   const [employees, setEmployees] = useState(employeesState.map((employee) => ({ ...employee })));
 
   useEffect(() => {
@@ -47,22 +61,20 @@ export default function EmployeesTable() {
         filteredEmployees.sort((a, b) => (a[inputsState.sortBy] == b[inputsState.sortBy] ? 0 : a[inputsState.sortBy].toLowerCase() < b[inputsState.sortBy].toLowerCase() ? -1 : 1));
       }
     }
+    const sortedEmployees = filteredEmployees;
 
     // Paging logic
-
-    if (prevEntriesCount.current !== inputsState.showEntries) {
+    if (prevEntriesCount.current !== entriesCount || total !== sortedEmployees.length) {
       setPage(1);
     }
-
-    prevEntriesCount.current = inputsState.showEntries;
-
-    const sortedEmployees = filteredEmployees;
-    const entriesCount = parseInt(inputsState.showEntries);
-
     setTotal(sortedEmployees.length);
+
+    prevEntriesCount.current = entriesCount;
+
     const toDisplay = sortedEmployees.slice(page * entriesCount - entriesCount, page * entriesCount - entriesCount + entriesCount);
+
     setEmployees(toDisplay);
-  }, [inputsState, page, employeesState]);
+  }, [inputsState, employeesState, page, entriesCount, total]);
 
   return (
     <div className="employees-table">
@@ -191,11 +203,11 @@ export default function EmployeesTable() {
           <i className="fa-solid fa-chevron-left"></i>
         </button>
         <span>
-          page {page} of {Math.ceil(total / parseInt(inputsState.showEntries))}
+          page {page} of {Math.ceil(total / entriesCount)}
         </span>
         <button
           onClick={() => {
-            if (page * parseInt(inputsState.showEntries) < total) setPage(page + 1);
+            if (page * entriesCount < total) setPage(page + 1);
           }}
         >
           <i className="fa-solid fa-chevron-right"></i>
