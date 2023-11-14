@@ -443,9 +443,9 @@ td:nth-child(even) {
 
 .selectCustom {
   position: absolute;
+  display: none;
   top: 0;
   left: 0;
-  display: none;
   width: 100%;
   height: 100%;
 }
@@ -491,18 +491,18 @@ td:nth-child(even) {
 }
 
 .selectCustom-trigger {
-  display: block;
-  line-height: 1.2rem;
   position: relative;
+  display: block;
+  padding-right: 2rem;
   width: 100%;
+  min-width: 90px;
   height: 100%;
   background-color: #fff;
-  cursor: pointer;
-  padding-right: 2rem;
-  min-width: 90px;
+  line-height: 1.2rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .selectCustom-trigger::after {
@@ -513,15 +513,15 @@ td:nth-child(even) {
 
 .selectCustom-options {
   position: absolute;
+  display: none;
   top: 2.2rem;
   left: 0;
   width: 100%;
+  max-height: 230.4px;
   border: 1px solid black;
   border-radius: 0.4rem;
   background-color: #fff;
   z-index: 1;
-  display: none;
-  max-height: 230.4px;
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   overflow-y: scroll;

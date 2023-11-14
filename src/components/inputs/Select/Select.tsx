@@ -216,7 +216,6 @@ export default function Select({ inputsState, inputState, setInputsState, showVa
                 key={index}
                 data-value={option.value}
                 onClick={() => {
-                  console.log(optionHoveredIndex);
                   if (elSelectCustomBox && elSelectCustomBox.current) {
                     // Update custom select text too
                     elSelectCustomBox.current.textContent = option.labor;
