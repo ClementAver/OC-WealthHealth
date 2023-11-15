@@ -282,6 +282,7 @@ h1 {
   border-radius: 0.6rem;
   padding: 0.2rem 1rem;
   background: none;
+  cursor: pointer;
 }
 .button__submit {
   align-self: center;
@@ -598,7 +599,6 @@ td:nth-child(even) {
   border-radius: 2rem;
   border: none;
   background-color: rgba(0, 0, 0, 0);
-  cursor: pointer;
 }
 .employees-table button {
   color: rgba(0, 0, 0, 0.5);
@@ -627,6 +627,7 @@ td:nth-child(even) {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
 }
 .employees-table .paging button:hover {
@@ -669,7 +670,6 @@ td:nth-child(even) {
   border-radius: 2rem;
   border: none;
   background-color: rgba(0, 0, 0, 0);
-  cursor: pointer;
 }
 .employees-table button {
   color: rgba(0, 0, 0, 0.5);
@@ -698,6 +698,7 @@ td:nth-child(even) {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
 }
 .employees-table .paging button:hover {

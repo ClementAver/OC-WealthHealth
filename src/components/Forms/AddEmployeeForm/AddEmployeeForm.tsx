@@ -124,6 +124,7 @@ export default function AddEmployeeForm() {
   return (
     <form
       className="form"
+      data-testid="create-employee-form"
       onSubmit={(e) => handleSubmit(e)}
       id="create-employee"
     >

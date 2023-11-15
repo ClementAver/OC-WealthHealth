@@ -39,7 +39,6 @@
       border-radius: 2rem;
       border: none;
       background-color: rgba(0, 0, 0, 0);
-      cursor: pointer;
     }
   }
 
@@ -76,6 +75,8 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
+
+      cursor: pointer;
 
       background-color: rgba(0, 0, 0, 0);
 
