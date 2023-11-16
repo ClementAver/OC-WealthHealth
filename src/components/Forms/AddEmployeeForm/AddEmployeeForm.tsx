@@ -82,7 +82,7 @@ export default function AddEmployeeForm() {
       setShowValidation((state) => ({ ...state, startDate: true }));
     }
 
-    if (inputsState.street.length < 1 || inputsState.street.length > 128) {
+    if (inputsState.street.length < 1 || inputsState.street.length > 256) {
       setShowValidation((state) => ({ ...state, street: true }));
     } else {
       areValid.street = true;
@@ -143,7 +143,7 @@ export default function AddEmployeeForm() {
               id="first-name"
               label="First Name"
               placeholder="John"
-              validationMsg="3-64 characters"
+              validationMsg="1-64 characters"
             />
           </div>
 
@@ -156,7 +156,7 @@ export default function AddEmployeeForm() {
               id="last-name"
               label="Last Name"
               placeholder="Doe"
-              validationMsg="3-64 characters"
+              validationMsg="1-64 characters"
             />
           </div>
 
@@ -202,7 +202,7 @@ export default function AddEmployeeForm() {
             id="street"
             label="Street"
             placeholder="Vonnie Brown 1515 Applewood Road Baton"
-            validationMsg="3-256 characters"
+            validationMsg="1-256 characters"
           />
         </div>
 
@@ -216,7 +216,7 @@ export default function AddEmployeeForm() {
               id="city"
               label="City"
               placeholder="San Francisco"
-              validationMsg="3-64 characters"
+              validationMsg="1-64 characters"
             />
           </div>
 

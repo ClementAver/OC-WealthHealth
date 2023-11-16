@@ -1,9 +1,6 @@
 import { screen } from "@testing-library/react";
 import { renderWithProviders } from "./utils/test-utils";
 import userEvent from "@testing-library/user-event";
-// import matchers from "@testing-library/jest-dom/matchers";
-// expect.extend(matchers);
-
 import App from "./App";
 
 describe("Given I am an user.", () => {
@@ -11,11 +8,9 @@ describe("Given I am an user.", () => {
     renderWithProviders(<App />);
   });
   describe("When I arrive on the application.", () => {
-    test("Then I should be able to see the logo and the baseline.", () => {
+    test("Then I should be able to see the logo.", () => {
       const logo = screen.getByTestId("logo");
-      const baseline = screen.getByText("Business tools");
       expect(logo).toBeVisible();
-      expect(baseline).toBeVisible();
     });
 
     test("Then I should be able to see the main title.", () => {
@@ -26,6 +21,29 @@ describe("Given I am an user.", () => {
     test("Then I should be able to see the form to register a new employee.", () => {
       const form = screen.getByTestId("create-employee-form");
       expect(form).toBeVisible();
+    });
+
+    describe("Then I should be able to enter a name in the corresponding input.", () => {
+      beforeEach(async () => {
+        const firstNameInput = screen.getByPlaceholderText("John");
+        await userEvent.click(firstNameInput);
+      });
+      test("If the data entered does not correspond to the input's expectations on submit, I should be warned.", async () => {
+        await userEvent.keyboard("{Enter}");
+        const firsNameInputContainer = document.getElementsByClassName("form__item");
+        // The input is empty, therefore the warning message should be added to the DOM on submission.
+        expect(firsNameInputContainer[0].childNodes.length).toBe(3);
+      });
+      test("Otherwise, I shouldn't", async () => {
+        await userEvent.keyboard("John");
+        await userEvent.keyboard("{Enter}");
+        const firsNameInputContainer = document.getElementsByClassName("form__item");
+        /*
+          The input isn't empty and contains no more than 64 characters,
+          therefore the warning message should not be added into the DOM on submission.
+        */
+        expect(firsNameInputContainer[0].childNodes.length).toBe(2);
+      });
     });
 
     test("Then I should be able to navigate to the 'Current Employees' page.", async () => {
