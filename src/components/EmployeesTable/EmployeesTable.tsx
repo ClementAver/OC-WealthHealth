@@ -130,7 +130,12 @@ export default function EmployeesTable() {
             <th scope="col">
               First Name
               <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName" }))}>▴</button>
+                <button
+                  data-testid="sorting-btn"
+                  onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName" }))}
+                >
+                  ▴
+                </button>
                 <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName-reverse" }))}>▾</button>
               </div>
             </th>
@@ -220,6 +225,7 @@ export default function EmployeesTable() {
           page {page} of {Math.ceil(total / entriesCount)}
         </span>
         <button
+          data-testid="next-page-btn"
           onClick={() => {
             if (page * entriesCount < total) setPage(page + 1);
           }}
