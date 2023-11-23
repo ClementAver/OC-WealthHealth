@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
-import { renderWithProviders } from "./utils/test-utils";
+import { renderWithProviders } from "../utils/test-utils";
 import userEvent from "@testing-library/user-event";
-import App from "./App";
+import App from "../App";
 
 describe("Given I am an user.", () => {
   beforeEach(async () => {
@@ -58,9 +58,7 @@ describe("Given I am an user.", () => {
 
     describe("When I search only for employees named 'Agathe'.", () => {
       test("Then only one employee must be displayed, whose first name should be 'Agathe'.", async () => {
-        const searchInput = screen.getByPlaceholderText("John");
-        await userEvent.click(searchInput);
-        await userEvent.keyboard("Agathe");
+        await userEvent.type(screen.getByPlaceholderText("John"), "Agathe");
         await userEvent.keyboard("{Enter}");
 
         const tbody = document.getElementsByTagName("tbody")[0];

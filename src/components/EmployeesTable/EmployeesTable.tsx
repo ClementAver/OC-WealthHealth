@@ -9,6 +9,7 @@ export default function EmployeesTable() {
   // Redux state recovery
   const employeesState = useSelector((state: { employees: [State] }) => state.employees);
 
+  const [loader, setLoader] = useState(true);
   const [inputsState, setInputsState] = useState({ showEntries: "", search: "", sortBy: "" });
 
   // Number of entries to be displayed
@@ -30,6 +31,12 @@ export default function EmployeesTable() {
   const prevEntriesCount = useRef(entriesCount);
   // Array containing all the filtered then sorted employees (will be mapped on).
   const [employees, setEmployees] = useState(employeesState.map((employee) => ({ ...employee })));
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     // Searching logic
@@ -91,148 +98,155 @@ export default function EmployeesTable() {
   }, [inputsState, employeesState, page, entriesCount, total]);
 
   return (
-    <div className="employees-table">
-      <form className="form">
-        <div className="form__container">
-          <div className="form__item form__item--half">
-            <Select
-              inputsState={inputsState}
-              inputState="showEntries"
-              setInputsState={setInputsState}
-              id="entries-displayed"
-              label="Entries displayed :"
-              placeholder={"Default (10)"}
-              options={[
-                { value: "10", labor: "10" },
-                { value: "25", labor: "25" },
-                { value: "50", labor: "50" },
-                { value: "100", labor: "100" },
-              ]}
-            />
-          </div>
-
-          <div className="form__item form__item--half">
-            <TextInput
-              inputsState={inputsState}
-              inputState="search"
-              setInputsState={setInputsState}
-              id="search"
-              label="Search"
-              placeholder="John"
-            />
-          </div>
+    <>
+      {loader && (
+        <div className="loader-container">
+          <span className="loader"></span>
         </div>
-      </form>
+      )}
+      <div className="employees-table">
+        <form className="form">
+          <div className="form__container">
+            <div className="form__item form__item--half">
+              <Select
+                inputsState={inputsState}
+                inputState="showEntries"
+                setInputsState={setInputsState}
+                id="entries-displayed"
+                label="Entries displayed :"
+                placeholder={"Default (10)"}
+                options={[
+                  { value: "10", labor: "10" },
+                  { value: "25", labor: "25" },
+                  { value: "50", labor: "50" },
+                  { value: "100", labor: "100" },
+                ]}
+              />
+            </div>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">
-              First Name
-              <div className="container-sort">
-                <button
-                  data-testid="sorting-btn"
-                  onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName" }))}
-                >
-                  ▴
-                </button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              Last Name{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              Date of Birth{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              Start Date{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              Department{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              Street{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              City{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              State{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state-reverse" }))}>▾</button>
-              </div>
-            </th>
-            <th scope="col">
-              Zip Code{" "}
-              <div className="container-sort">
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode" }))}>▴</button>
-                <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode-reverse" }))}>▾</button>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((employee, index) => (
-            <tr key={index}>
-              <td>{employee.firstName}</td>
-              <td>{employee.lastName}</td>
-              <td>{employee.birthDate.toString().slice(0, 15)}</td>
-              <td>{employee.startDate.toString().slice(0, 15)}</td>
-              <td>{employee.department}</td>
-              <td>{employee.street}</td>
-              <td>{employee.city}</td>
-              <td>{employee.state}</td>
-              <td>{employee.zipCode}</td>
+            <div className="form__item form__item--half">
+              <TextInput
+                inputsState={inputsState}
+                inputState="search"
+                setInputsState={setInputsState}
+                id="search"
+                label="Search"
+                placeholder="John"
+              />
+            </div>
+          </div>
+        </form>
+
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">
+                First Name
+                <div className="container-sort">
+                  <button
+                    data-testid="sorting-btn"
+                    onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName" }))}
+                  >
+                    ▴
+                  </button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "firstName-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                Last Name{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "lastName-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                Date of Birth{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "birthDate-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                Start Date{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "startDate-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                Department{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "department-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                Street{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "street-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                City{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "city-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                State{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "state-reverse" }))}>▾</button>
+                </div>
+              </th>
+              <th scope="col">
+                Zip Code{" "}
+                <div className="container-sort">
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode" }))}>▴</button>
+                  <button onClick={() => setInputsState((state) => ({ ...state, sortBy: "zipCode-reverse" }))}>▾</button>
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="paging">
-        <button
-          onClick={() => {
-            if (page > 1) setPage(page - 1);
-          }}
-        >
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
-        <span>
-          page {page} of {Math.ceil(total / entriesCount)}
-        </span>
-        <button
-          data-testid="next-page-btn"
-          onClick={() => {
-            if (page * entriesCount < total) setPage(page + 1);
-          }}
-        >
-          <i className="fa-solid fa-chevron-right"></i>
-        </button>
+          </thead>
+          <tbody>
+            {employees.map((employee, index) => (
+              <tr key={index}>
+                <td>{employee.firstName}</td>
+                <td>{employee.lastName}</td>
+                <td>{employee.birthDate.toString().slice(0, 15)}</td>
+                <td>{employee.startDate.toString().slice(0, 15)}</td>
+                <td>{employee.department}</td>
+                <td>{employee.street}</td>
+                <td>{employee.city}</td>
+                <td>{employee.state}</td>
+                <td>{employee.zipCode}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="paging">
+          <button
+            onClick={() => {
+              if (page > 1) setPage(page - 1);
+            }}
+          >
+            <i className="fa-solid fa-chevron-left"></i>
+          </button>
+          <span>
+            page {page} of {Math.ceil(total / entriesCount)}
+          </span>
+          <button
+            data-testid="next-page-btn"
+            onClick={() => {
+              if (page * entriesCount < total) setPage(page + 1);
+            }}
+          >
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

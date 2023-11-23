@@ -164,6 +164,71 @@ h1 {
   text-align: center;
 }
 
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: white;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  color: #c8e4c4;
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.8s infinite ease-in-out;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    animation-fill-mode: both;
+    animation: bblFadInOut 1.8s infinite ease-in-out;
+  }
+
+  &:before {
+    color: #daf7a6;
+    left: -3.5em;
+    animation-delay: -0.32s;
+  }
+
+  &:after {
+    left: 3.5em;
+    color: #b6d0e2;
+  }
+}
+
+@keyframes bblFadInOut {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+
 @import "globals/forms.scss";
 @import "globals/buttons.scss";
 @import "globals/table.scss";

@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
-import { renderWithProviders } from "./utils/test-utils";
+import { renderWithProviders } from "../utils/test-utils";
 import userEvent from "@testing-library/user-event";
-import App from "./App";
+import App from "../App";
 
 describe("Given I am an user.", () => {
   beforeEach(() => {
@@ -24,13 +24,10 @@ describe("Given I am an user.", () => {
     });
 
     describe("When I enter a first name in the corresponding input.", () => {
-      beforeEach(async () => {
-        const firstNameInput = screen.getByPlaceholderText("John");
-        await userEvent.click(firstNameInput);
-      });
-
       describe("When the data entered does not correspond to the input's expectations on submit.", () => {
         test("Then I should be warned.", async () => {
+          const firstNameInput = screen.getByPlaceholderText("John");
+          await userEvent.click(firstNameInput);
           await userEvent.keyboard("{Enter}");
           const firsNameInputContainer = document.getElementsByClassName("form__item");
           // The input is empty, therefore the warning message should be added to the DOM on submission.
@@ -40,7 +37,7 @@ describe("Given I am an user.", () => {
 
       describe("When the data entered correspond to the input's expectations on submit.", () => {
         test("Then the warning message shouldn't be displayed.", async () => {
-          await userEvent.keyboard("John");
+          await userEvent.type(screen.getByPlaceholderText("John"), "John");
           await userEvent.keyboard("{Enter}");
           const firsNameInputContainer = document.getElementsByClassName("form__item");
           /*
@@ -54,35 +51,15 @@ describe("Given I am an user.", () => {
 
     describe("When I submit a valid form", () => {
       test("Then I should be informed that an employee has successfully been created.", async () => {
-        const firstNameInput = screen.getByPlaceholderText("John");
-        await userEvent.click(firstNameInput);
-        await userEvent.keyboard("John");
-        await userEvent.keyboard("{Enter}");
-
-        const lastNameInput = screen.getByPlaceholderText("Doe");
-        await userEvent.click(lastNameInput);
-        await userEvent.keyboard("Doe");
-        await userEvent.keyboard("{Enter}");
-
-        const streetInput = screen.getByPlaceholderText("Vonnie Brown 1515 Applewood Road Baton");
-        await userEvent.click(streetInput);
-        await userEvent.keyboard("Vonnie Brown 1515 Applewood Road Baton");
-        await userEvent.keyboard("{Enter}");
-
-        const cityInput = screen.getByPlaceholderText("San Francisco");
-        await userEvent.click(cityInput);
-        await userEvent.keyboard("San Francisco");
-        await userEvent.keyboard("{Enter}");
-
-        const zipCodeInput = screen.getByPlaceholderText("75000");
-        await userEvent.click(zipCodeInput);
-        await userEvent.keyboard("75000");
-        await userEvent.keyboard("{Enter}");
+        await userEvent.type(screen.getByPlaceholderText("John"), "John");
+        await userEvent.type(screen.getByPlaceholderText("Doe"), "Doe");
+        await userEvent.type(screen.getByPlaceholderText("Vonnie Brown 1515 Applewood Road Baton"), "Vonnie Brown 1515 Applewood Road Baton");
+        await userEvent.type(screen.getByPlaceholderText("San Francisco"), "San Francisco");
+        await userEvent.type(screen.getByPlaceholderText("75000"), "75000");
 
         const selectCustomOptions = document.getElementsByClassName("selectCustom-option");
         const alabama = selectCustomOptions[0];
         const legal = selectCustomOptions[63];
-
         await userEvent.click(alabama);
         await userEvent.click(legal);
 
