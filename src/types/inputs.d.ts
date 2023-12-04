@@ -20,11 +20,6 @@ export interface TextProps<A, B> extends Props<A, B> {
 
 export type NumberProps<A, B> = TextProps<A, B>;
 
-export interface SelectProps<A, B> extends Props<A, B> {
-  placeholder: string;
-  options: Option[];
-}
-
 export interface Option {
   value: string;
   labor: string;
