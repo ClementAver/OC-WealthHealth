@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import Select from "../../inputs/Select/Select";
+import Select from "caver-react-select";
 import TextInput from "../../inputs/TextInput/TextInput";
 import NumberInput from "../../inputs/NumberInput/NumberInput";
 import SubmitModal from "../../Modals/SubmitModal/SubmitModal";

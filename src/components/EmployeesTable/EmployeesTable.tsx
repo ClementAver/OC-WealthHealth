@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import type { State } from "../../types/inputs";
-import Select from "../inputs/Select/Select";
+import Select from "caver-react-select";
 import TextInput from "../inputs/TextInput/TextInput";
 import { Employee } from "../../types/employees";
 
