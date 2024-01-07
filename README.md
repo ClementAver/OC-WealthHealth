@@ -1,27 +1,23 @@
-# React + TypeScript + Vite
+# WealthHealth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div>
+<img alt="Static Badge" src="https://img.shields.io/badge/TypeScript-3178c6">
+<img alt="Static Badge" src="https://img.shields.io/badge/React-61dafb">
+<img alt="Static Badge" src="https://img.shields.io/badge/React%20Router-red">
+<img alt="Static Badge" src="https://img.shields.io/badge/Redux-764abc">
+<img alt="Static Badge" src="https://img.shields.io/badge/Sass-pink">
+<img alt="Static Badge" src="https://img.shields.io/badge/Vitest-add467">
+<img alt="Static Badge" src="https://img.shields.io/badge/Testing%20Library-%23fc0335">
+</div>
 
-Currently, two official plugins are available:
+Wealth Health was a large financial group that used an internal web application to manage its employee records, HRnet. Using jQuery, the application seemed to have questionable performance and complaints were piling up. For this project we were tasked with converting the HRnet codebase to React. We also had to propose a library to be published on npm for one of the four existing jQuery plugins. You can find my library by clicking [here](https://www.npmjs.com/package/caver-react-select) or [there](https://github.com/ClementAver/react-select).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<br/><br/>
 
-## Expanding the ESLint configuration
+<p align="center">
+  <img src="public/assets/README/Screenshot-homepage.png" alt="Screenshot of the webpage" width="600"/>
+</p>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<p align="center">
+  <img src="public/assets/README/Screenshot-employees.png" alt="Screenshot of the page listing the employees" width="600"/>
+</p>
